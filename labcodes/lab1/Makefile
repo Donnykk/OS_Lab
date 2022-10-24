@@ -178,11 +178,10 @@ $(call create_target_host,sign,sign)
 # create ucore.img
 UCOREIMG	:= $(call totarget,ucore.img)
 
-$(UCOREIMG): $(kernel) $(bootblock)
-	$(V)dd if=/dev/zero of=$@ count=10000
+$(UCOREIMG): $(kernel) $(bootblock) 
+	$(V)dd if=/dev/zero of=$@ count=10000	
 	$(V)dd if=$(bootblock) of=$@ conv=notrunc
-	$(V)dd if=$(kernel) of=$@ seek=1 conv=notrunc
-
+	$(V)dd if=$(kernel) of=$@ seek=1 conv=notrunc	
 $(call create_target,ucore.img)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
