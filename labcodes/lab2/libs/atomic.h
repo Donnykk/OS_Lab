@@ -17,8 +17,11 @@ static inline bool test_bit(int nr, volatile void *addr) __attribute__((always_i
  * restricted to acting on a single-word quantity.
  * */
 static inline void
-set_bit(int nr, volatile void *addr) {
-    asm volatile ("btsl %1, %0" :"=m" (*(volatile long *)addr) : "Ir" (nr));
+set_bit(int nr, volatile void *addr)
+{
+    asm volatile("btsl %1, %0"
+                 : "=m"(*(volatile long *)addr)
+                 : "Ir"(nr));
 }
 
 /* *
@@ -27,8 +30,11 @@ set_bit(int nr, volatile void *addr) {
  * @addr:   the address to start counting from
  * */
 static inline void
-clear_bit(int nr, volatile void *addr) {
-    asm volatile ("btrl %1, %0" :"=m" (*(volatile long *)addr) : "Ir" (nr));
+clear_bit(int nr, volatile void *addr)
+{
+    asm volatile("btrl %1, %0"
+                 : "=m"(*(volatile long *)addr)
+                 : "Ir"(nr));
 }
 
 /* *
@@ -37,8 +43,11 @@ clear_bit(int nr, volatile void *addr) {
  * @addr:   the address to start counting from
  * */
 static inline void
-change_bit(int nr, volatile void *addr) {
-    asm volatile ("btcl %1, %0" :"=m" (*(volatile long *)addr) : "Ir" (nr));
+change_bit(int nr, volatile void *addr)
+{
+    asm volatile("btcl %1, %0"
+                 : "=m"(*(volatile long *)addr)
+                 : "Ir"(nr));
 }
 
 /* *
@@ -47,11 +56,13 @@ change_bit(int nr, volatile void *addr) {
  * @addr:   the address to count from
  * */
 static inline bool
-test_bit(int nr, volatile void *addr) {
+test_bit(int nr, volatile void *addr)
+{
     int oldbit;
-    asm volatile ("btl %2, %1; sbbl %0,%0" : "=r" (oldbit) : "m" (*(volatile long *)addr), "Ir" (nr));
+    asm volatile("btl %2, %1; sbbl %0,%0"
+                 : "=r"(oldbit)
+                 : "m"(*(volatile long *)addr), "Ir"(nr));
     return oldbit != 0;
 }
 
 #endif /* !__LIBS_ATOMIC_H__ */
-
