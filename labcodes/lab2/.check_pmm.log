@@ -9,23 +9,23 @@ Booting from Hard Disk..(THU.CST) os is loading ...
 
 Special kernel symbols:
   entry  0xc0100036 (phys)
-  etext  0xc0105f88 (phys)
+  etext  0xc0105fa2 (phys)
   edata  0xc011b000 (phys)
   end    0xc011bf2c (phys)
 Kernel executable memory footprint: 112KB
 ebp:0xc0117f38 eip:0xc01009ea args:0x00010094 0x00010094 0xc0117f68 0xc01000c9 
-    kern/debug/kdebug.c:308: print_stackframe+21
+    kern/debug/kdebug.c:335: print_stackframe+21
 ebp:0xc0117f48 eip:0xc0100ce1 args:0x00000000 0x00000000 0x00000000 0xc0117fb8 
-    kern/debug/kmonitor.c:129: mon_backtrace+10
+    kern/debug/kmonitor.c:145: mon_backtrace+10
 ebp:0xc0117f68 eip:0xc01000c9 args:0x00000000 0xc0117f90 0xffff0000 0xc0117f94 
     kern/init/init.c:50: grade_backtrace2+33
 ebp:0xc0117f88 eip:0xc01000f7 args:0x00000000 0xffff0000 0xc0117fb4 0x0000002a 
     kern/init/init.c:56: grade_backtrace1+40
 ebp:0xc0117fa8 eip:0xc0100117 args:0x00000000 0xc0100036 0xffff0000 0x0000001d 
     kern/init/init.c:62: grade_backtrace0+23
-ebp:0xc0117fc8 eip:0xc010013f args:0xc0105fbc 0xc0105fa0 0x00000f2c 0x00000000 
+ebp:0xc0117fc8 eip:0xc010013f args:0xc0105fdc 0xc0105fc0 0x00000f2c 0x00000000 
     kern/init/init.c:67: grade_backtrace+34
-ebp:0xc0117ff8 eip:0xc0100087 args:0xc0106150 0xc0106158 0xc0100c65 0xc0106177 
+ebp:0xc0117ff8 eip:0xc0100087 args:0xc0106170 0xc0106178 0xc0100c65 0xc0106197 
     kern/init/init.c:28: kern_init+80
 memory management: default_pmm_manager
 e820map:
@@ -36,18 +36,18 @@ e820map:
   memory: 00020000, [07fe0000, 07ffffff], type = 2.
   memory: 00040000, [fffc0000, ffffffff], type = 2.
 check_alloc_page() succeeded!
-kernel panic at kern/mm/pmm.c:478:
+kernel panic at kern/mm/pmm.c:480:
     assertion failed: get_pte(boot_pgdir, PGSIZE, 0) == ptep
 stack trackback:
-ebp:0xc0117f18 eip:0xc01009ea args:0xc0106284 0xc0117f5c 0x000001de 0xc0103d3c 
-    kern/debug/kdebug.c:308: print_stackframe+21
-ebp:0xc0117f48 eip:0xc0100d52 args:0xc0106b8c 0x000001de 0xc0106bb1 0xc0106d0c 
-    kern/debug/panic.c:27: __panic+103
-ebp:0xc0117f88 eip:0xc0104a35 args:0x00000000 0xffff0000 0xc0117fb4 0x0000002a 
-    kern/mm/pmm.c:478: check_pgdir+605
-ebp:0xc0117fc8 eip:0xc0104561 args:0xc0105fbc 0xc0105fa0 0x00000f2c 0x00000000 
+ebp:0xc0117f18 eip:0xc01009ea args:0xc01062a4 0xc0117f5c 0x000001e0 0xc0103d3c 
+    kern/debug/kdebug.c:335: print_stackframe+21
+ebp:0xc0117f48 eip:0xc0100d52 args:0xc0106bac 0x000001e0 0xc0106bd1 0xc0106d2c 
+    kern/debug/panic.c:28: __panic+103
+ebp:0xc0117f88 eip:0xc0104a4f args:0x00000000 0xffff0000 0xc0117fb4 0x0000002a 
+    kern/mm/pmm.c:480: check_pgdir+605
+ebp:0xc0117fc8 eip:0xc0104561 args:0xc0105fdc 0xc0105fc0 0x00000f2c 0x00000000 
     kern/mm/pmm.c:294: pmm_init+90
-ebp:0xc0117ff8 eip:0xc010008c args:0xc0106150 0xc0106158 0xc0100c65 0xc0106177 
+ebp:0xc0117ff8 eip:0xc010008c args:0xc0106170 0xc0106178 0xc0100c65 0xc0106197 
     kern/init/init.c:30: kern_init+85
 Welcome to the kernel debug monitor!!
 Type 'help' for a list of commands.
