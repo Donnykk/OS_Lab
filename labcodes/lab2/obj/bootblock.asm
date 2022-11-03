@@ -197,12 +197,12 @@ readseg(uintptr_t va, uint32_t count, uint32_t offset) {
     7ca7:	83 ec 08             	sub    $0x8,%esp
     uintptr_t end_va = va + count;
     7caa:	89 7d ec             	mov    %edi,-0x14(%ebp)
-static inline void invlpg(void *addr) __attribute__((always_inline));
 
 static inline uint8_t
-inb(uint16_t port) {
+inb(uint16_t port)
+{
     uint8_t data;
-    asm volatile ("inb %1, %0" : "=a" (data) : "d" (port) : "memory");
+    asm volatile("inb %1, %0"
     7cad:	bb f7 01 00 00       	mov    $0x1f7,%ebx
     uint32_t secno = (offset / SECTSIZE) + 1;
     7cb2:	89 45 f0             	mov    %eax,-0x10(%ebp)
@@ -219,12 +219,12 @@ inb(uint16_t port) {
     7cbd:	24 c0                	and    $0xc0,%al
     7cbf:	3c 40                	cmp    $0x40,%al
     7cc1:	75 f7                	jne    7cba <readseg+0x2e>
-        : "memory", "cc");
 }
 
 static inline void
-outb(uint16_t port, uint8_t data) {
-    asm volatile ("outb %0, %1" :: "a" (data), "d" (port) : "memory");
+outb(uint16_t port, uint8_t data)
+{
+    asm volatile("outb %0, %1" ::"a"(data), "d"(port)
     7cc3:	ba f2 01 00 00       	mov    $0x1f2,%edx
     7cc8:	b0 01                	mov    $0x1,%al
     7cca:	ee                   	out    %al,(%dx)
@@ -251,14 +251,14 @@ outb(uint16_t port, uint8_t data) {
     7cfc:	b0 20                	mov    $0x20,%al
     7cfe:	89 da                	mov    %ebx,%edx
     7d00:	ee                   	out    %al,(%dx)
-    asm volatile ("inb %1, %0" : "=a" (data) : "d" (port) : "memory");
+    asm volatile("inb %1, %0"
     7d01:	89 da                	mov    %ebx,%edx
     7d03:	ec                   	in     (%dx),%al
     while ((inb(0x1F7) & 0xC0) != 0x40)
     7d04:	24 c0                	and    $0xc0,%al
     7d06:	3c 40                	cmp    $0x40,%al
     7d08:	75 f7                	jne    7d01 <readseg+0x75>
-    asm volatile (
+    asm volatile(
     7d0a:	89 f7                	mov    %esi,%edi
     7d0c:	b9 80 00 00 00       	mov    $0x80,%ecx
     7d11:	ba f0 01 00 00       	mov    $0x1f0,%edx
@@ -344,8 +344,9 @@ bootmain(void) {
 }
 
 static inline void
-outw(uint16_t port, uint16_t data) {
-    asm volatile ("outw %0, %1" :: "a" (data), "d" (port) : "memory");
+outw(uint16_t port, uint16_t data)
+{
+    asm volatile("outw %0, %1" ::"a"(data), "d"(port)
     7d8c:	ba 00 8a ff ff       	mov    $0xffff8a00,%edx
     7d91:	89 d0                	mov    %edx,%eax
     7d93:	66 ef                	out    %ax,(%dx)
