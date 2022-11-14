@@ -6,6 +6,7 @@
 #include <memlayout.h>
 #include <pmm.h>
 #include <default_pmm.h>
+#include <buddy_pmm.h>
 #include <sync.h>
 #include <error.h>
 
@@ -139,7 +140,8 @@ gdt_init(void)
 static void
 init_pmm_manager(void)
 {
-    pmm_manager = &default_pmm_manager;
+    //pmm_manager = &default_pmm_manager;
+    pmm_manager = &buddy_pmm_manager;
     cprintf("memory management: %s\n", pmm_manager->name);
     pmm_manager->init();
 }

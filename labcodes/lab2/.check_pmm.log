@@ -9,23 +9,23 @@ Booting from Hard Disk..(THU.CST) os is loading ...
 
 Special kernel symbols:
   entry  0xc0100036 (phys)
-  etext  0xc0105fa2 (phys)
-  edata  0xc011b000 (phys)
-  end    0xc011bf2c (phys)
-Kernel executable memory footprint: 112KB
-ebp:0xc0117f38 eip:0xc01009ea args:0x00010094 0x00010094 0xc0117f68 0xc01000c9 
+  etext  0xc0106129 (phys)
+  edata  0xc011c000 (phys)
+  end    0xc011cf2c (phys)
+Kernel executable memory footprint: 116KB
+ebp:0xc0118f38 eip:0xc01009ea args:0x00010094 0x00010094 0xc0118f68 0xc01000c9 
     kern/debug/kdebug.c:335: print_stackframe+21
-ebp:0xc0117f48 eip:0xc0100ce1 args:0x00000000 0x00000000 0x00000000 0xc0117fb8 
+ebp:0xc0118f48 eip:0xc0100ce1 args:0x00000000 0x00000000 0x00000000 0xc0118fb8 
     kern/debug/kmonitor.c:145: mon_backtrace+10
-ebp:0xc0117f68 eip:0xc01000c9 args:0x00000000 0xc0117f90 0xffff0000 0xc0117f94 
+ebp:0xc0118f68 eip:0xc01000c9 args:0x00000000 0xc0118f90 0xffff0000 0xc0118f94 
     kern/init/init.c:50: grade_backtrace2+33
-ebp:0xc0117f88 eip:0xc01000f7 args:0x00000000 0xffff0000 0xc0117fb4 0x0000002a 
+ebp:0xc0118f88 eip:0xc01000f7 args:0x00000000 0xffff0000 0xc0118fb4 0x0000002a 
     kern/init/init.c:56: grade_backtrace1+40
-ebp:0xc0117fa8 eip:0xc0100117 args:0x00000000 0xc0100036 0xffff0000 0x0000001d 
+ebp:0xc0118fa8 eip:0xc0100117 args:0x00000000 0xc0100036 0xffff0000 0x0000001d 
     kern/init/init.c:62: grade_backtrace0+23
-ebp:0xc0117fc8 eip:0xc010013f args:0xc0105fdc 0xc0105fc0 0x00000f2c 0x00000000 
+ebp:0xc0118fc8 eip:0xc010013f args:0xc010615c 0xc0106140 0x00000f2c 0x00000000 
     kern/init/init.c:67: grade_backtrace+34
-ebp:0xc0117ff8 eip:0xc0100087 args:0xc0106170 0xc0106178 0xc0100c65 0xc0106197 
+ebp:0xc0118ff8 eip:0xc0100087 args:0xc01062f0 0xc01062f8 0xc0100c65 0xc0106317 
     kern/init/init.c:28: kern_init+80
 memory management: default_pmm_manager
 e820map:
@@ -36,19 +36,67 @@ e820map:
   memory: 00020000, [07fe0000, 07ffffff], type = 2.
   memory: 00040000, [fffc0000, ffffffff], type = 2.
 check_alloc_page() succeeded!
-kernel panic at kern/mm/pmm.c:480:
-    assertion failed: get_pte(boot_pgdir, PGSIZE, 0) == ptep
+check_pgdir() succeeded!
+check_boot_pgdir() succeeded!
+-------------------- BEGIN --------------------
+PDE(0e0) c0000000-f8000000 38000000 urw
+  |-- PTE(38000) c0000000-f8000000 38000000 -rw
+PDE(001) fac00000-fb000000 00400000 -rw
+  |-- PTE(000e0) faf00000-fafe0000 000e0000 urw
+  |-- PTE(00001) fafeb000-fafec000 00001000 -rw
+--------------------- END ---------------------
+++ setup timer interrupts
+0: @ring 0
+0:  cs = 8
+0:  ds = 10
+0:  es = 10
+0:  ss = 10
++++ switch to  user  mode +++
+100 ticks
+End of Test.
+kernel panic at kern/trap/trap.c:19:
+    EOT: kernel seems ok.
 stack trackback:
-ebp:0xc0117f18 eip:0xc01009ea args:0xc01062a4 0xc0117f5c 0x000001e0 0xc0103d3c 
+ebp:0xc0118f08 eip:0xc01009ea args:0xc0106424 0xc0118f4c 0x00000013 0xc010035e 
     kern/debug/kdebug.c:335: print_stackframe+21
-ebp:0xc0117f48 eip:0xc0100d52 args:0xc0106bac 0x000001e0 0xc0106bd1 0xc0106d2c 
+ebp:0xc0118f38 eip:0xc0100d52 args:0xc01064ce 0x00000013 0xc01064b8 0xc010035e 
     kern/debug/panic.c:28: __panic+103
-ebp:0xc0117f88 eip:0xc0104a4f args:0x00000000 0xffff0000 0xc0117fb4 0x0000002a 
-    kern/mm/pmm.c:480: check_pgdir+605
-ebp:0xc0117fc8 eip:0xc0104561 args:0xc0105fdc 0xc0105fc0 0x00000f2c 0x00000000 
-    kern/mm/pmm.c:294: pmm_init+90
-ebp:0xc0117ff8 eip:0xc010008c args:0xc0106170 0xc0106178 0xc0100c65 0xc0106197 
-    kern/init/init.c:30: kern_init+85
+ebp:0xc0118f58 eip:0xc0101969 args:0x00010094 0xc0118fa8 0xc0118f7c 0x00010094 
+    kern/trap/trap.c:0: print_ticks+65
+ebp:0xc0118f88 eip:0xc0101e17 args:0xc0118fb4 0xc010020b 0x0000001b 0x00003282 
+    kern/trap/trap.c:189: trap_dispatch+134
+ebp:0xc0118fa8 eip:0xc0101f6c args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trap.c:239: trap+16
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
+ebp:0xc0118fa8 eip:0xc0101f87 args:0xc0118fb4 0x0000807c 0x00010094 0xc0118fa8 
+    kern/trap/trapentry.S:24: <unknown>+0
 Welcome to the kernel debug monitor!!
 Type 'help' for a list of commands.
 K> 
