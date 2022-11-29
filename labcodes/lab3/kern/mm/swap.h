@@ -14,7 +14,7 @@
  *           24 bits            7 bits    1 bit
  * */
 
-#define MAX_SWAP_OFFSET_LIMIT                   (1 << 24)
+#define MAX_SWAP_OFFSET_LIMIT (1 << 24)
 
 extern size_t max_swap_offset;
 
@@ -22,32 +22,40 @@ extern size_t max_swap_offset;
  * swap_offset - takes a swap_entry (saved in pte), and returns
  * the corresponding offset in swap mem_map.
  * */
-#define swap_offset(entry) ({                                       \
-               size_t __offset = (entry >> 8);                        \
-               if (!(__offset > 0 && __offset < max_swap_offset)) {    \
-                    panic("invalid swap_entry_t = %08x.\n", entry);    \
-               }                                                    \
-               __offset;                                            \
-          })
+#define swap_offset(entry) ({                             \
+     size_t __offset = (entry >> 8);                      \
+     if (!(__offset > 0 && __offset < max_swap_offset))   \
+     {                                                    \
+          panic("invalid swap_entry_t = %08x.\n", entry); \
+     }                                                    \
+     __offset;                                            \
+})
 
 struct swap_manager
 {
      const char *name;
      /* Global initialization for the swap manager */
-     int (*init)            (void);
+     // 初始化全局虚拟内存交换管理器
+     int (*init)(void);
      /* Initialize the priv data inside mm_struct */
-     int (*init_mm)         (struct mm_struct *mm);
-     /* Called when tick interrupt occured */
-     int (*tick_event)      (struct mm_struct *mm);
+     // 初始化设置所关联的全局内存管理器
+     int (*init_mm)(struct mm_struct *mm);
+     /* Called when tick interrupt occured  */
+     // 当时钟中断时被调用，可用于主动的swap交换策略
+     int (*tick_event)(struct mm_struct *mm);
      /* Called when map a swappable page into the mm_struct */
-     int (*map_swappable)   (struct mm_struct *mm, uintptr_t addr, struct Page *page, int swap_in);
+     // 当映射一个可交换Page物理页加入mm_struct时被调用
+     int (*map_swappable)(struct mm_struct *mm, uintptr_t addr, struct Page *page, int swap_in);
      /* When a page is marked as shared, this routine is called to
       * delete the addr entry from the swap manager */
-     int (*set_unswappable) (struct mm_struct *mm, uintptr_t addr);
+     // 当一个页面被标记为共享页面，该函数例程会被调用。
+     // 用于将addr对应的虚拟页，从swap_manager中移除，阻止其被调度置换到磁盘中
+     int (*set_unswappable)(struct mm_struct *mm, uintptr_t addr);
      /* Try to swap out a page, return then victim */
-     int (*swap_out_victim) (struct mm_struct *mm, struct Page **ptr_page, int in_tick);
+     // 当试图换出一个物理页时，返回被选中的页面(被牺牲的页面)
+     int (*swap_out_victim)(struct mm_struct *mm, struct Page **ptr_page, int in_tick);
      /* check the page relpacement algorithm */
-     int (*check_swap)(void);     
+     int (*check_swap)(void);
 };
 
 extern volatile int swap_init_ok;
