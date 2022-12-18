@@ -64,5 +64,30 @@ struct proc_struct
 
 * `kernel_thread_entry`中，利用之前在中断栈中设置好的`ebx(fn)`，`edx(arg)`执行真正的`init_proc`逻辑的处理(`init_main`函数)，在`init_main`返回后，跳转至`do_exit `终止退出。
 
+## 中断禁止
+
+* 为了中断禁止和中断允许，保护进程切换不被中断，避免进程切换时其他进程进行调度，使用`local_intr_save(intr_flag)`和`local_intr_restore(intr_flag)`进行中断的有条件控制，避免出现嵌套中断
+
+```c
+void proc_run(struct proc_struct *proc)
+{
+    if (proc != current)
+    {
+        bool intr_flag;
+        struct proc_struct *prev = current, *next = proc;
+        // 切换新线程时需要暂时关闭中断，避免出现嵌套中断
+        local_intr_save(intr_flag);
+        {
+            current = proc;
+            load_esp0(next->kstack + KSTACKSIZE);
+            // 设置cr3寄存器的值，令其指向新线程的页表
+            lcr3(next->cr3);
+            switch_to(&(prev->context), &(next->context));
+        }
+        local_intr_restore(intr_flag);
+    }
+}
+```
+
 
 *源码链接：https://github.com/Donnykk/OS_Lab*
